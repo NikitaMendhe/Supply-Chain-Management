@@ -283,3 +283,5 @@ with col2:
     plt.title('Overall Profitability by Product Type',weight='bold',fontsize=12)
     st.pyplot(fig)
 
+st.markdown("<br><br><br>")
+st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

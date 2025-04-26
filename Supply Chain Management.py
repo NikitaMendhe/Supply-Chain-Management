@@ -9,7 +9,7 @@ st.markdown("<h1 style='text-align: center; color: #000000'>🚚 SUPPLY CHAIN DA
 st.markdown("""<style>[data-testid='stSidebar']{background:linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb); color: #333333}</style>""",unsafe_allow_html=True)
 st.markdown("""<style>[data-testid='stSidebar']{width:5px !important;}</style>""", unsafe_allow_html=True)
 st.markdown("""<style>.stMetric{border-radius:15px;border:2px solid #4CAF50;padding:10px;}</style>""",unsafe_allow_html=True)
-df=pd.read_csv("C:/Users/91808/Music/Nikita Documents/unified mentor internship/Supply Chain Management/supply_chain_data.csv")
+df=pd.read_csv("supply_chain_data.csv")
 st.download_button(label="Get_Data", data=df.to_csv(index=False).encode('utf-8'), file_name="C:/Users/91808/Music/Nikita Documents/unified mentor internship/Supply Chain Management/supply_chain_data.csv",mime="csv")
 Total_Revenue=df['Revenue generated'].sum()
 Total_Products_Sold=df['Number of products sold'].sum()

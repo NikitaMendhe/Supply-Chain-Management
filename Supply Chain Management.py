@@ -156,7 +156,7 @@ with col1:
 with col2:
     #Chart8
     supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(8,4), facecolor='none')
+    fig, ax = plt.subplots(figsize=(5,3), facecolor='none')
     labels=supplier_revenue['Supplier name']
     sizes=supplier_revenue['Revenue generated']
     colors=['lightgreen', 'mediumseagreen', 'seagreen', 'limegreen', 'forestgreen', 'darkgreen']
@@ -201,7 +201,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart11
     inspection_results_stats=filtered_df.groupby('Inspection results')['Defect rates'].mean().reset_index()
-    fig, ax = plt.subplots(figsize=(8,4), facecolor='none')
+    fig, ax = plt.subplots(figsize=(5,3), facecolor='none')
     labels=inspection_results_stats['Inspection results']
     sizes=inspection_results_stats['Defect rates']
     plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels))
@@ -257,7 +257,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart15
     locationstats=filtered_df.groupby('Location')['Order quantities'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(8,4))
+    fig, ax = plt.subplots(figsize=(5,3))
     ax=sns.barplot(data=locationstats,x='Location',y='Order quantities',palette='muted')
     bars=ax.containers[0]
     ax.bar_label(bars,fmt='%.f')
@@ -283,5 +283,4 @@ with col2:
     plt.title('Overall Profitability by Product Type',weight='bold',fontsize=12)
     st.pyplot(fig)
 
-st.markdown("<br><br><br>")
 st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

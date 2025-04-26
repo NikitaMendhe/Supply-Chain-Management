@@ -60,7 +60,7 @@ with col1:
 with col2:
 #Chart2
     location_stats=filtered_df.groupby('Location')['Production volumes'].mean().reset_index()
-    fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
+    fig, ax = plt.subplots(figsize=(8,4), facecolor='none')
     labels=location_stats['Location']
     sizes=location_stats['Production volumes']
     colors = ['lightblue', 'skyblue', 'deepskyblue', 'dodgerblue', 'cornflowerblue', 'steelblue']

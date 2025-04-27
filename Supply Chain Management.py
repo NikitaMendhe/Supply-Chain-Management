@@ -76,7 +76,7 @@ col1,col2=st.columns(2)
 with col1:
 #Chart3    
     supplier_statistics=filtered_df.groupby('Supplier name')[['Manufacturing costs','Defect rates']].sum().reset_index()
-    fig,ax1=plt.subplots(figsize=(12,9))
+    fig,ax1=plt.subplots(figsize=(12,8))
     ax1=sns.barplot(data=supplier_statistics,x='Supplier name',y='Manufacturing costs',label='Manufacturing costs',ax=ax1,palette='Greens_d')
     bars=ax1.containers[0]
     ax1.bar_label(bars,fmt='%.1f')
@@ -108,22 +108,22 @@ with col2:
 col1,col2=st.columns(2)
 with col1:
 #Chart5
-    location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(8,4), facecolor='none')
-    labels=location_revenue['Location']
-    sizes=location_revenue['Revenue generated']
-    colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']
-    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),colors=colors[:len(sizes)])
+    inspection_results_stats=filtered_df.groupby('Inspection results')['Defect rates'].mean().reset_index()
+    fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
+    labels=inspection_results_stats['Inspection results']
+    sizes=inspection_results_stats['Defect rates']
+    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels))
     fig.patch.set_edgecolor('black')  
     fig.patch.set_linewidth(1) 
-    plt.title('Revenue Distribution by Location',weight='bold',fontsize=12)
+    plt.title('Defect Rates by Inspection Results',weight='bold',fontsize=12)
     plt.tight_layout()
     st.pyplot(plt)
+    
 
 with col2:
     #Chart6
     producttype_stat=filtered_df.groupby('Product type')[['Manufacturing costs','Price']].mean().reset_index()
-    fig,ax=plt.subplots(figsize=(10,6))
+    fig,ax=plt.subplots(figsize=(12,8))
     index=np.arange(len(producttype_stat))
     bar_width=0.34
     bars1=plt.bar(index,producttype_stat['Price'],bar_width,label='Price',color='Teal')
@@ -142,7 +142,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart7
     leadtime=filtered_df.groupby('Supplier name')['Lead times'].mean().reset_index()
-    fig,ax=plt.subplots(figsize=(10,6))
+    fig,ax=plt.subplots(figsize=(12,8))
     ax=sns.lineplot(data=leadtime,x='Supplier name',y='Lead times',marker='>')
     for i , value in enumerate(leadtime['Lead times']):
         ax.text(leadtime['Supplier name'][i],value,f'{value:.1f}',color='black',weight='bold',fontsize=9)
@@ -156,7 +156,7 @@ with col1:
 with col2:
     #Chart8
     supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(5,3), facecolor='none')
+    fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
     labels=supplier_revenue['Supplier name']
     sizes=supplier_revenue['Revenue generated']
     colors=['lightgreen', 'mediumseagreen', 'seagreen', 'limegreen', 'forestgreen', 'darkgreen']
@@ -172,7 +172,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart9
     unit_sold_stat=filtered_df.groupby('Product type')['Number of products sold'].sum().reset_index()
-    fig,ax=plt.subplots(figsize=(10,6))
+    fig,ax=plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=unit_sold_stat,x='Product type',y='Number of products sold',palette='Reds')
     bars=ax.containers[0]
     ax.bar_label(bars,fmt='%.f')
@@ -186,7 +186,7 @@ with col1:
 with col2:
     #Chart10
     transportation_stats=filtered_df.groupby('Transportation modes')['Shipping costs'].mean().reset_index()
-    fig,ax=plt.subplots(figsize=(10,6))
+    fig,ax=plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=transportation_stats,y='Transportation modes',x='Shipping costs',palette='viridis')
     bars=ax.containers[0] 
     ax.bar_label(bars,fmt='%.f')
@@ -200,14 +200,15 @@ with col2:
 col1,col2=st.columns(2)
 with col1:
     #Chart11
-    inspection_results_stats=filtered_df.groupby('Inspection results')['Defect rates'].mean().reset_index()
-    fig, ax = plt.subplots(figsize=(5,3), facecolor='none')
-    labels=inspection_results_stats['Inspection results']
-    sizes=inspection_results_stats['Defect rates']
-    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels))
+    location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
+    fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
+    labels=location_revenue['Location']
+    sizes=location_revenue['Revenue generated']
+    colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']
+    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),colors=colors[:len(sizes)])
     fig.patch.set_edgecolor('black')  
     fig.patch.set_linewidth(1) 
-    plt.title('Defect Rates by Inspection Results',weight='bold',fontsize=12)
+    plt.title('Revenue Distribution by Location',weight='bold',fontsize=12)
     plt.tight_layout()
     st.pyplot(plt)
 
@@ -257,7 +258,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart15
     locationstats=filtered_df.groupby('Location')['Order quantities'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(5,3))
+    fig, ax = plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=locationstats,x='Location',y='Order quantities',palette='muted')
     bars=ax.containers[0]
     ax.bar_label(bars,fmt='%.f')
@@ -272,7 +273,7 @@ with col2:
     #Chart16
     filtered_df['Profit']=filtered_df['Revenue generated']-filtered_df['Manufacturing costs']
     profitby_prod=filtered_df.groupby('Product type')['Profit'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(10,6))
+    fig, ax = plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=profitby_prod,x='Product type',y='Profit',palette='Paired')
     bars=ax.containers[0]
     ax.bar_label(bars,fmt='%.f')

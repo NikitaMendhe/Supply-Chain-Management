@@ -201,7 +201,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart11
     location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(5,2), facecolor='none')
+    fig, ax = plt.subplots(figsize=(5,3), facecolor='none')
     labels=location_revenue['Location']
     sizes=location_revenue['Revenue generated']
     colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']
@@ -215,7 +215,7 @@ with col1:
 with col2:
     #Chart12
     carrier_statistics=filtered_df.groupby('Shipping carriers')[['Shipping times','Shipping costs']].mean().reset_index()
-    fig,ax=plt.subplots(figsize=(12,8))
+    fig,ax=plt.subplots(figsize=(12,10))
     bar_width=0.34
     index=np.arange(len(carrier_statistics['Shipping carriers']))
     bars1=plt.bar(index,carrier_statistics['Shipping times'],bar_width,label='Shipping times',color='steelblue')

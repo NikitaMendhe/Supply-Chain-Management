@@ -91,8 +91,7 @@ with col1:
     ax2.set_ylabel('Defect rates')
     plt.title('Relationship Between Defect Rates and Manufacturing Costs by Supplier',weight='bold',fontsize=12)
     st.pyplot(fig)
- with col2:
-     #Chart4
+ with col2:  #Chart4
     product_statistics= filtered_df.groupby('Product type')['Stock levels'].mean().reset_index()
     fig,ax=plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=product_statistics,x='Product type',y='Stock levels',palette='colorblind')

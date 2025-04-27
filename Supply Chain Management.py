@@ -91,9 +91,8 @@ with col1:
     ax2.set_ylabel('Defect rates')
     plt.title('Relationship Between Defect Rates and Manufacturing Costs by Supplier',weight='bold',fontsize=12)
     st.pyplot(fig)
-    
-with col2:  
-    #Chart4
+ with col2:
+     #Chart4
     product_statistics= filtered_df.groupby('Product type')['Stock levels'].mean().reset_index()
     fig,ax=plt.subplots(figsize=(12,8))
     ax=sns.barplot(data=product_statistics,x='Product type',y='Stock levels',palette='colorblind')
@@ -108,35 +107,33 @@ with col2:
 col1,col2=st.columns(2)
 with col1:
 #Chart5
-    inspection_results_stats=filtered_df.groupby('Inspection results')['Defect rates'].mean().reset_index()
+    location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
     fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
-    labels=inspection_results_stats['Inspection results']
-    sizes=inspection_results_stats['Defect rates']
-    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels))
+    labels=location_revenue['Location']
+    sizes=location_revenue['Revenue generated']
+    colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']
+    plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),colors=colors[:len(sizes)])
     fig.patch.set_edgecolor('black')  
     fig.patch.set_linewidth(1) 
-    plt.title('Defect Rates by Inspection Results',weight='bold',fontsize=12)
+    plt.title('Revenue Distribution by Location',weight='bold',fontsize=12)
     plt.tight_layout()
     st.pyplot(plt)
-    
 
 with col2:
     #Chart6
-    producttype_stat=filtered_df.groupby('Product type')[['Manufacturing costs','Price']].mean().reset_index()
-    fig,ax=plt.subplots(figsize=(12,8))
-    index=np.arange(len(producttype_stat))
-    bar_width=0.34
-    bars1=plt.bar(index,producttype_stat['Price'],bar_width,label='Price',color='Teal')
-    bars2=plt.bar(index+bar_width,producttype_stat['Manufacturing costs'],bar_width,label='Manufacturing costs',color='Coral')
-    plt.xticks(index +bar_width/2,producttype_stat.index, rotation=45)
-    ax.set_facecolor('none')
-    fig.patch.set_facecolor('none')
-    plt.bar_label(bars1,fmt='%.2f')
-    plt.bar_label(bars2,fmt='%.2f')
-    plt.ylabel('Amount')
-    plt.title('Comparison of price and manufacturing costs by product type',weight='bold',fontsize=12)
-    plt.legend()
-    st.pyplot(fig)
+    supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
+    fig, ax = plt.subplots(figsize=(10,7), facecolor='none')
+    labels=supplier_revenue['Supplier name']
+    sizes=supplier_revenue['Revenue generated']
+    colors=['lightgreen', 'mediumseagreen', 'seagreen', 'limegreen', 'forestgreen', 'darkgreen']
+    plt.pie(sizes,labels=labels,autopct='%.1f%%',explode=[0.01]*len(labels),wedgeprops=dict(width=0.4),colors=colors[:len(sizes)])
+    center_circle=plt.Circle((0,0),0.70,fc='none')
+    fig.patch.set_edgecolor('black')  
+    fig.patch.set_linewidth(1) 
+    plt.gca().add_artist(center_circle)
+    plt.title('Revenue Contribution by Supplier',weight='bold',fontsize=12)
+    st.pyplot(plt)
+    
 
 col1,col2=st.columns(2)
 with col1:
@@ -155,18 +152,21 @@ with col1:
 
 with col2:
     #Chart8
-    supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(10,6), facecolor='none')
-    labels=supplier_revenue['Supplier name']
-    sizes=supplier_revenue['Revenue generated']
-    colors=['lightgreen', 'mediumseagreen', 'seagreen', 'limegreen', 'forestgreen', 'darkgreen']
-    plt.pie(sizes,labels=labels,autopct='%.1f%%',explode=[0]*len(labels),wedgeprops=dict(width=0.4),colors=colors[:len(sizes)])
-    center_circle=plt.Circle((0,0),0.70,fc='none')
-    fig.patch.set_edgecolor('black')  
-    fig.patch.set_linewidth(1) 
-    plt.gca().add_artist(center_circle)
-    plt.title('Revenue Contribution by Supplier',weight='bold',fontsize=12)
-    st.pyplot(plt)
+    producttype_stat=filtered_df.groupby('Product type')[['Manufacturing costs','Price']].mean().reset_index()
+    fig,ax=plt.subplots(figsize=(12,8))
+    index=np.arange(len(producttype_stat))
+    bar_width=0.34
+    bars1=plt.bar(index,producttype_stat['Price'],bar_width,label='Price',color='Teal')
+    bars2=plt.bar(index+bar_width,producttype_stat['Manufacturing costs'],bar_width,label='Manufacturing costs',color='Coral')
+    plt.xticks(index +bar_width/2,producttype_stat.index, rotation=45)
+    ax.set_facecolor('none')
+    fig.patch.set_facecolor('none')
+    plt.bar_label(bars1,fmt='%.2f')
+    plt.bar_label(bars2,fmt='%.2f')
+    plt.ylabel('Amount')
+    plt.title('Comparison of price and manufacturing costs by product type',weight='bold',fontsize=12)
+    plt.legend()
+    st.pyplot(fig)    
 
 col1,col2=st.columns(2)
 with col1:

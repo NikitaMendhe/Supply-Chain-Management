@@ -201,7 +201,7 @@ col1,col2=st.columns(2)
 with col1:
     #Chart11
     location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
-    fig, ax = plt.subplots(figsize=(4,2), facecolor='none')
+    fig, ax = plt.subplots(figsize=(6,4), facecolor='none')
     labels=location_revenue['Location']
     sizes=location_revenue['Revenue generated']
     colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']

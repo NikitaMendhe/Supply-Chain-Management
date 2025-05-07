@@ -321,7 +321,7 @@ print('RMSE:',rmse)
 st.metric("MSE", f"{mse:.2f}")
 st.metric("R2", f"{r2:.2f}")
 st.metric("MAE", f"{mae:.2f}")
-st.metric("RMSE", f"{rmae:.2f}")
+st.metric("RMSE", f"{rmse:.2f}")
 
 fig,ax=plt.subplots(figsize=(8,5))
 residuals=y_test-y_pred

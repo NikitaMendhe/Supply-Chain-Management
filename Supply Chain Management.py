@@ -381,7 +381,8 @@ with col2:
     plt.title('Model Loss Curve')
     plt.legend()
     st.pyplot(fig)
-    st.line_chart(history.history['loss'], use_container_width=True)
+
+st.line_chart(history.history['loss'], use_container_width=True)
 
 test_loss,test_mae=model.evaluate(X_test_scaled,y_test)
 print(f"Test MAE:{test_mae}")

@@ -382,9 +382,9 @@ y_predict=model.predict(X_test_scaled)
 y_predict_df=pd.DataFrame(y_predict,columns=['Predicted_Revenue','Predicted_Profit','Predicted_No._of_Unit_Sold'])
 y_test_df=y_test.reset_index(drop=True)
 result_df=pd.concat([y_test_df,y_predict_df],axis=1)
+st.dataframe(result_df.head())
 
-st.metric("Test MAE", f"{test_mae:.2f}")
 st.line_chart(history.history['loss'], use_container_width=True)
-st.dataframe(results_df.head())
+
 
 st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

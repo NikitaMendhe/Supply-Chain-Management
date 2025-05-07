@@ -282,4 +282,104 @@ with col4:
     plt.title('Overall Profitability by Product Type',weight='bold',fontsize=12)
     st.pyplot(fig)
 
+filtered_df['Sales_per_stock_unit']=filtered_df['Revenue generated']/filtered_df['Stock levels']
+filtered_df['Profit_per_product']=filtered_df['Revenue generated']-filtered_df['Manufacturing costs']
+filtered_df['Defect_percentage']=filtered_df['Defect rates']*100
+filtered_df['Shipping_cost_per_product']=filtered_df['Shipping costs']/filtered_df['Number of products sold']
+filtered_df['Order_to_production_ratio']=filtered_df['Order quantities']/filtered_df['Production volumes']
+filtered_df['Total_lead_time']=filtered_df['Lead time']+filtered_df['Manufacturing lead time']
+
+categorical_columns=['Product type','Availability','Shipping carriers','Inspection results','Transportation modes', 'Routes','Customer demographics','Supplier name', 'Location']
+
+filtered_df_encoded=pd.get_dummies(filtered_df,columns=categorical_columns)
+drop_col=['SKU']
+
+filtered_df_model=filtered_df_encoded.drop(columns=drop_col)
+    
+from sklearn.model_selection import train_test_split
+X=filtered_df_model.drop(columns=['Revenue generated'])
+y=filtered_df_model['Revenue generated']
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
+X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
+X_test.replace([np.inf, -np.inf], np.nan, inplace=True)
+X_train.fillna(0, inplace=True)
+X_test.fillna(0, inplace=True)
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score,mean_absolute_error
+model=LinearRegression()
+model.fit(X_train, y_train)
+y_pred=model.predict(X_test)
+mse=mean_squared_error(y_test,y_pred)
+r2=r2_score(y_test,y_pred)
+mae=mean_absolute_error(y_test,y_pred)
+rmse=np.sqrt(mse)
+print('MSE:',mse)
+print('R2:',r2)
+print('MAE:',mae)
+print('RMSE:',rmse)
+residuals=y_test-y_pred
+
+plt.figure(figsize=(10,6))
+sns.histplot(residuals,kde=True)
+plt.xlabel('Residual')
+plt.ylabel('Frequency')
+plt.title("Residuals Distribution")
+st.pyplot(fig)
+
+plt.figure(figsize=(10,6))
+plt.scatter(y_pred,residuals)
+plt.axhline(y=0,color='r',linestyle='--')
+plt.title('Residual Vs Predicted Plot')
+plt.xlabel('Predicted Revenue')
+plt.ylabel('Residuals')
+st.pyplot(fig)
+
+coefficient=model.coef_
+features=X.columns
+coeff_df=pd.DataFrame({'Features':features,'Coefficient':coefficient})
+print(coeff_df.sort_values(by='Coefficient',ascending=False))
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred, color='blue', label='Predicted')
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
+plt.xlabel('Actual Revenue')
+plt.ylabel('Predicted Revenue')
+plt.title('Actual vs Predicted Revenue')
+plt.legend()
+st.pyplot(fig)
+
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.layers import Dense, Dropout
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+X_train_scaled=scaler.fit_transform(X_train)
+X_test_scaled=scaler.transform(X_test)
+model=keras.Sequential([layers.Dense(128,activation='relu'),
+                       layers.Dense(64,activation="relu"),
+                        layers.Dense(32,activation='relu'),
+                        layers.Dense(3)])
+model.compile(optimizer='adam',loss='mse',metrics=['mae'])
+history=model.fit(X_train_scaled,y_train,epochs=50,batch_size=32,validation_split=0.2)
+
+plt.figure(figsize=(10,6))
+plt.plot(history.history['loss'],label='Training Loss')
+plt.plot(history.history['val_loss'],label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.title('Model Loss Curve')
+plt.legend()
+st.pyplot(fig)
+
+test_loss,test_mae=model.evaluate(X_test_scaled,y_test)
+print(f"Test MAE:{test_mae}")
+y_predict=model.predict(X_test_scaled)
+y_predict_df=pd.DataFrame(y_predict,columns=['Predicted_Revenue','Predicted_Profit','Predicted_No._of_Unit_Sold'])
+y_test_df=y_test.reset_index(drop=True)
+result_df=pd.concat([y_test_df,y_predict_df],axis=1)
+st.title("Supply Chain Model Results")
+st.metric("Test MAE", f"{test_mae:.2f}")
+st.line_chart(history.history['loss'], use_container_width=True)
+st.dataframe(results_df.head())
+
 st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

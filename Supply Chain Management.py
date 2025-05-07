@@ -393,6 +393,4 @@ result_df=pd.concat([y_test_df,y_predict_df],axis=1)
 st.dataframe(result_df.head())
 
 
-
-
 st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

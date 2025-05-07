@@ -325,7 +325,6 @@ st.metric("RMSE", f"{rmse:.2f}")
 
 fig,ax=plt.subplots(figsize=(8,5))
 residuals=y_test-y_pred
-plt.figure(figsize=(10,6))
 sns.histplot(residuals,kde=True)
 plt.xlabel('Residual')
 plt.ylabel('Frequency')
@@ -333,7 +332,6 @@ plt.title("Residuals Distribution")
 st.pyplot(fig)
 
 fig,ax=plt.subplots(figsize=(8,5))
-plt.figure(figsize=(10,6))
 plt.scatter(y_pred,residuals)
 plt.axhline(y=0,color='r',linestyle='--')
 plt.title('Residual Vs Predicted Plot')

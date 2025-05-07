@@ -17,6 +17,7 @@ Total_Cost=df['Costs'].sum()
 Total_Stock_Levels=df['Stock levels'].sum()
 Average_Lead_Times=df['Lead times'].mean()
 Average_Shipping_Times=df['Shipping times'].mean()
+
 col1,col2,col3=st.columns(3)
 col1.metric('💸Total_Revenue',f'₹{Total_Revenue:,.0f}')
 col2.metric('📦Total_Products_Sold',f'{Total_Products_Sold:,.0f}')

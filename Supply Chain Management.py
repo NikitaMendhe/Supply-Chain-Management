@@ -318,39 +318,44 @@ print('MSE:',mse)
 print('R2:',r2)
 print('MAE:',mae)
 print('RMSE:',rmse)
-st.metric("MSE", f"{mse:.2f}")
-st.metric("R2", f"{r2:.2f}")
-st.metric("MAE", f"{mae:.2f}")
-st.metric("RMSE", f"{rmse:.2f}")
+col1,col2,col3,col4=st.columns(4)
+col1.metric("MSE", f"{mse:.2f}")
+col2.metric("R2", f"{r2:.2f}")
+col3.metric("MAE", f"{mae:.2f}")
+col4.metric("RMSE", f"{rmse:.2f}")
 
-fig,ax=plt.subplots(figsize=(8,5))
-residuals=y_test-y_pred
-sns.histplot(residuals,kde=True)
-plt.xlabel('Residual')
-plt.ylabel('Frequency')
-plt.title("Residuals Distribution")
-st.pyplot(fig)
+col1,col2=st.columns(2)
+with col1:
+    fig,ax=plt.subplots(figsize=(8,5))
+    residuals=y_test-y_pred
+    sns.histplot(residuals,kde=True)
+    plt.xlabel('Residual')
+    plt.ylabel('Frequency')
+    plt.title("Residuals Distribution")
+    st.pyplot(fig)
+with col2:
+    fig,ax=plt.subplots(figsize=(8,5))
+    plt.scatter(y_pred,residuals)
+    plt.axhline(y=0,color='r',linestyle='--')
+    plt.title('Residual Vs Predicted Plot')
+    plt.xlabel('Predicted Revenue')
+    plt.ylabel('Residuals')
+    st.pyplot(fig)
 
-fig,ax=plt.subplots(figsize=(8,5))
-plt.scatter(y_pred,residuals)
-plt.axhline(y=0,color='r',linestyle='--')
-plt.title('Residual Vs Predicted Plot')
-plt.xlabel('Predicted Revenue')
-plt.ylabel('Residuals')
-st.pyplot(fig)
-
-coefficient=model.coef_
-features=X.columns
-coeff_df=pd.DataFrame({'Features':features,'Coefficient':coefficient})
-print(coeff_df.sort_values(by='Coefficient',ascending=False))
-fig,ax=plt.subplots(figsize=(8,5))
-plt.scatter(y_test, y_pred, color='blue', label='Predicted')
-plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
-plt.xlabel('Actual Revenue')
-plt.ylabel('Predicted Revenue')
-plt.title('Actual vs Predicted Revenue')
-plt.legend()
-st.pyplot(fig)
+col1,col2=st.columns(2)
+with col1:
+    coefficient=model.coef_
+    features=X.columns
+    coeff_df=pd.DataFrame({'Features':features,'Coefficient':coefficient})
+    print(coeff_df.sort_values(by='Coefficient',ascending=False))
+    fig,ax=plt.subplots(figsize=(8,5))
+    plt.scatter(y_test, y_pred, color='blue', label='Predicted')
+    plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
+    plt.xlabel('Actual Revenue')
+    plt.ylabel('Predicted Revenue')
+    plt.title('Actual vs Predicted Revenue')
+    plt.legend()
+    st.pyplot(fig)
 
 import tensorflow as tf
 from tensorflow import keras
@@ -366,15 +371,16 @@ model=keras.Sequential([layers.Dense(128,activation='relu'),
                         layers.Dense(3)])
 model.compile(optimizer='adam',loss='mse',metrics=['mae'])
 history=model.fit(X_train_scaled,y_train,epochs=50,batch_size=32,validation_split=0.2)
-
-fig,ax=plt.subplots(figsize=(8,5))
-plt.plot(history.history['loss'],label='Training Loss')
-plt.plot(history.history['val_loss'],label='Validation Loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.title('Model Loss Curve')
-plt.legend()
-st.pyplot(fig)
+with col2:
+    fig,ax=plt.subplots(figsize=(8,5))
+    plt.plot(history.history['loss'],label='Training Loss')
+    plt.plot(history.history['val_loss'],label='Validation Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Model Loss Curve')
+    plt.legend()
+    st.pyplot(fig)
+    st.line_chart(history.history['loss'], use_container_width=True)
 
 test_loss,test_mae=model.evaluate(X_test_scaled,y_test)
 print(f"Test MAE:{test_mae}")
@@ -384,7 +390,7 @@ y_test_df=y_test.reset_index(drop=True)
 result_df=pd.concat([y_test_df,y_predict_df],axis=1)
 st.dataframe(result_df.head())
 
-st.line_chart(history.history['loss'], use_container_width=True)
+
 
 
 st.markdown("<p style='text-align: center; font-size: 12px;'>Made by Nikita Mendhe | <a href='www.linkedin.com/in/nikita-mendhe-2067b5210' target='_blank'>LinkedIn</a></p>", unsafe_allow_html=True)

@@ -327,7 +327,7 @@ col4.metric("RMSE", f"{rmse:.2f}")
 
 col1,col2=st.columns(2)
 with col1:
-    fresiduals = y_test - y_pred
+    residuals = y_test - y_pred
     fig, ax = plt.subplots(figsize=(8, 5))
     sns.histplot(residuals, kde=True, ax=ax)
     ax.set_xlabel('Residual')

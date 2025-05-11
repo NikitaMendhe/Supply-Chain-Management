@@ -327,20 +327,21 @@ col4.metric("RMSE", f"{rmse:.2f}")
 
 col1,col2=st.columns(2)
 with col1:
-    fig,ax=plt.subplots(figsize=(8,5))
-    residuals=y_test-y_pred
-    sns.histplot(residuals,kde=True)
-    plt.xlabel('Residual')
-    plt.ylabel('Frequency')
-    plt.title("Residuals Distribution")
+    fresiduals = y_test - y_pred
+    fig, ax = plt.subplots(figsize=(8, 5))
+    sns.histplot(residuals, kde=True, ax=ax)
+    ax.set_xlabel('Residual')
+    ax.set_ylabel('Frequency')
+    ax.set_title("Residuals Distribution")
     st.pyplot(fig)
+
 with col2:
-    fig,ax=plt.subplots(figsize=(8,5))
-    plt.scatter(y_pred,residuals)
-    plt.axhline(y=0,color='r',linestyle='--')
-    plt.title('Residual Vs Predicted Plot')
-    plt.xlabel('Predicted Revenue')
-    plt.ylabel('Residuals')
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.scatter(y_pred, residuals)
+    ax.axhline(y=0, color='r', linestyle='--')
+    ax.set_title('Residual Vs Predicted Plot')
+    ax.set_xlabel('Predicted Revenue')
+    ax.set_ylabel('Residuals')
     st.pyplot(fig)
 
 col1,col2=st.columns(2)

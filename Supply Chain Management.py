@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 df=pd.read_csv("supply_chain_data.csv")
 st.set_page_config(page_title='SUPPLY CHAIN DASHBOARD', page_icon='🚚', layout='wide')
+st.markdown("""<style>.block-container { padding-top: 0rem; }</style>""", unsafe_allow_html=True)
 st.markdown("""<style>[data-testid="stAppViewContainer"] {background: linear-gradient(135deg, #a18cd1, #000046);color: #ffffff;
 div[data-testid='stMultiSelect']{width:100px !important; font-size:10px !importnat; padding:1px !importnat;}label{font-size:10px !important; color:white !important;}</style>""", unsafe_allow_html=True)
 filtered_df=df.copy() 
@@ -84,7 +85,7 @@ with col2:
     plt.xticks(color='white') 
     plt.yticks(color='white')
     plt.tight_layout()
-    st.pyplot(plt)
+    st.pyplot(fig, use_container_width=True)
     
 with col3:
 #chart 3  
@@ -195,7 +196,7 @@ with col3:
     plt.xticks(color='white') 
     plt.yticks(color='white')
     plt.tight_layout()
-    st.pyplot(plt)
+    st.pyplot(fig, use_container_width=True)
 
 st.markdown("<h2 style='color:white;'>🔹 Cost, Pricing & Defects</h2>", unsafe_allow_html=True)
 col1,col2,col3=st.columns(3)
@@ -250,7 +251,7 @@ with col3:
     plt.xticks(color='white') 
     plt.yticks(color='white')
     plt.tight_layout()
-    st.pyplot(fig)
+    st.pyplot(fig, use_container_width=True)
     
 st.markdown("<h2 style='color:white;'>🔹 Shipping & Supply Chain Performance</h2>", unsafe_allow_html=True)
 col1,col2,col3,col4=st.columns(4)
@@ -321,7 +322,7 @@ with col4:
     plt.tight_layout()
     plt.xticks(color='white') 
     plt.yticks(color='white')
-    st.pyplot(plt)
+    st.pyplot(fig, use_container_width=True)
     
 #modeling and forecasting
 #feature engineering
@@ -362,6 +363,7 @@ print('MAE:',mae)
 print('RMSE:',rmse)
 residuals=y_test-y_pred
 
+st.markdown("<h2 style='color:white;'>🔹 Model Performance Visuals</h2>", unsafe_allow_html=True)
 col1,col2=st.columns(2)
 with col1:
     residuals = y_test - y_pred

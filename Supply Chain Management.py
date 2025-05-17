@@ -67,14 +67,15 @@ with st.container():
         labels=location_revenue['Location']
         sizes=location_revenue['Revenue generated']
         colors=['lightblue', 'lightgreen', 'lightcoral', 'lightyellow', 'lightpink']
-        plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),colors=colors[:len(sizes)],textprops={'color': 'white'})
-        fig.patch.set_edgecolor('black')  
-        fig.patch.set_linewidth(1) 
-        plt.title('Revenue Distribution by Location',weight='bold',fontsize=12,color='white')
-        plt.xticks(color='white') 
-        plt.yticks(color='white')
-        plt.tight_layout()
+        ax.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),colors=colors[:len(sizes)],textprops={'color': 'white'})
+        ax.patch.set_edgecolor('black')  
+        ax.patch.set_linewidth(1) 
+        ax.title('Revenue Distribution by Location',weight='bold',fontsize=12,color='white')
+        ax.xticks(color='white') 
+        ax.yticks(color='white')
+        ax.tight_layout()
         st.pyplot(fig, use_container_width=True)
+        
     with col3:
     #chart 3  
         supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
@@ -82,15 +83,15 @@ with st.container():
         labels=supplier_revenue['Supplier name']
         sizes=supplier_revenue['Revenue generated']
         colors=['lightgreen', 'mediumseagreen', 'seagreen', 'limegreen', 'forestgreen', 'darkgreen']
-        plt.pie(sizes,labels=labels,autopct='%.1f%%',explode=[0.01]*len(labels),wedgeprops=dict(width=0.4),colors=colors[:len(sizes)],textprops={'color': 'white'})
+        ax.pie(sizes,labels=labels,autopct='%.1f%%',explode=[0.01]*len(labels),wedgeprops=dict(width=0.4),colors=colors[:len(sizes)],textprops={'color': 'white'})
         center_circle=plt.Circle((0,0),0.70,fc='none')
         fig.patch.set_edgecolor('black')  
         fig.patch.set_linewidth(1) 
-        plt.gca().add_artist(center_circle)
-        plt.title('Revenue Contribution by Supplier',weight='bold',fontsize=12,color='white')
-        plt.xticks(color='white') 
-        plt.yticks(color='white')
-        plt.tight_layout()
+        ax.gca().add_artist(center_circle)
+        ax.title('Revenue Contribution by Supplier',weight='bold',fontsize=12,color='white')
+        ax.xticks(color='white') 
+        ax.yticks(color='white')
+        ax.tight_layout()
         st.pyplot(fig, use_container_width=True)
         
 with st.container():    
@@ -123,6 +124,7 @@ with st.container():
         plt.yticks(color='white')
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
+        
     with col3:   
         filtered_df['Profit']=filtered_df['Revenue generated']-filtered_df['Manufacturing costs']
         profitby_prod=filtered_df.groupby('Product type')['Profit'].sum().reset_index()
@@ -172,17 +174,15 @@ with st.container():
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
     with col3:
-        transportation_stats=filtered_df.groupby('Transportation modes')['Order quantities'].sum().reset_index()
-        plt.figure(figsize=(4.5,3.5),facecolor='none')
-        sns.heatmap(transportation_stats['Order quantities'].values.reshape(-1,1),annot=True,fmt='.0f',cmap='YlGnBu',
-            yticklabels=transportation_stats['Transportation modes'],xticklabels=['Order quantities'])
-        plt.xlabel('')
-        plt.ylabel('Transportation modes',color='white')
-        plt.title('Total Order Quantity by Transportation Mode',weight='bold',fontsize=12,color='white')
-        plt.xticks(color='white') 
-        plt.yticks(color='white')
+        fig_hm, ax_hm = plt.subplots(figsize=(4.5, 3.5))
+        sns.heatmap(transportation_stats['Order quantities'].values.reshape(-1, 1),annot=True, fmt='.0f', cmap='YlGnBu',yticklabels=transportation_stats['Transportation modes'],xticklabels=['Order quantities'], ax=ax_hm)
+        ax_hm.set_xlabel('')
+        ax_hm.set_ylabel('Transportation modes', color='white')
+        ax_hm.set_title('Total Order Quantity by Transportation Mode', weight='bold', fontsize=12, color='white')
+        fig_hm.patch.set_facecolor('none')
+        ax_hm.set_facecolor('none')
         plt.tight_layout()
-        st.pyplot(fig, use_container_width=True)
+        st.pyplot(fig_hm, use_container_width=True)
         
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Cost, Pricing & Defects</h2>", unsafe_allow_html=True)
@@ -296,15 +296,15 @@ with st.container():
         labels=location_stats['Location']
         sizes=location_stats['Production volumes']
         colors = ['lightblue', 'skyblue', 'deepskyblue', 'dodgerblue', 'cornflowerblue', 'steelblue']
-        plt.pie(sizes,labels=labels,autopct='%.2f%%',explode=[0]*len(labels),wedgeprops=dict(width=0.7),colors=colors[:len(sizes)],textprops={'color': 'white'} )
+        ax.pie(sizes,labels=labels,autopct='%.2f%%',explode=[0]*len(labels),wedgeprops=dict(width=0.7),colors=colors[:len(sizes)],textprops={'color': 'white'} )
         center_circle=plt.Circle((0,0),0.70,fc='none')
         fig.patch.set_edgecolor('black')  
         fig.patch.set_linewidth(1) 
-        plt.gca().add_artist(center_circle)
-        plt.title('Percentage of Production Volumes Aligned with Market Demands by Location',weight='bold',fontsize=12,color='white')
-        plt.tight_layout()
-        plt.xticks(color='white') 
-        plt.yticks(color='white')
+        ax.gca().add_artist(center_circle)
+        ax.title('Percentage of Production Volumes Aligned with Market Demands by Location',weight='bold',fontsize=12,color='white')
+        ax.tight_layout()
+        ax.xticks(color='white') 
+        ax.yticks(color='white')
         st.pyplot(fig, use_container_width=True)
 #feature engineering
 filtered_df['Sales_per_stock_unit']=filtered_df['Revenue generated']/filtered_df['Stock levels']

@@ -40,8 +40,11 @@ col3.markdown(f'<div class="metric-text">💰Total_Cost<span class="metric-value
 col4.markdown(f'<div class="metric-text">📈Total_Stock_Levels<span class="metric-value">{Total_Stock_Levels:,.0f}</span></div>',unsafe_allow_html=True)
 col5.markdown(f'<div class="metric-text">⏱️Average_Lead_Times<span class="metric-value">{Average_Lead_Times}days </span></div>',unsafe_allow_html=True)
 col6.markdown(f'<div class="metric-text">🚚Average_Shipping_Times<span class="metric-value">{Average_Shipping_Times}days </span></div>',unsafe_allow_html=True)
+
+
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Sales & Product Performance</h2>", unsafe_allow_html=True)   
+    
     col1,col2,col3=st.columns(3)
     with col1:
         revenue_by_product=filtered_df.groupby('Product type')['Revenue generated'].sum().sort_values(ascending =False).reset_index()
@@ -172,9 +175,11 @@ with st.container():
         ax.set_facecolor('none')
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
-        
+
+
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Cost, Pricing & Defects</h2>", unsafe_allow_html=True)
+    
     col1,col2,col3=st.columns(3)
     with col1:
         supplier_statistics=filtered_df.groupby('Supplier name')[['Manufacturing costs','Defect rates']].sum().reset_index()
@@ -222,9 +227,11 @@ with st.container():
         fig.suptitle('Defect Rates by Inspection Results',weight='bold',fontsize=12,color='white')
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
+        
 
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Shipping & Supply Chain Performance</h2>", unsafe_allow_html=True)
+    
     col1,col2,col3=st.columns(3)
     with col1:
         transportation_stats=filtered_df.groupby('Transportation modes')['Shipping costs'].mean().reset_index()
@@ -311,6 +318,7 @@ print('RMSE:',rmse)
 residuals=y_test-y_pred
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Model Performance Visuals</h2>", unsafe_allow_html=True)
+    
     col1,col2=st.columns(2)
     with col1:
         residuals = y_test - y_pred
@@ -344,7 +352,7 @@ with st.container():
         features=X.columns
         coeff_df=pd.DataFrame({'Features':features,'Coefficient':coefficient})
         print(coeff_df.sort_values(by='Coefficient',ascending=False))
-        fig,ax=plt.subplots(figsize=(8,5))
+        fig,ax=plt.subplots(figsize=(4.5,3.5))
         plt.scatter(y_test, y_pred, color='blue', label='Predicted')
         plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
         ax.set_facecolor('none')
@@ -377,9 +385,9 @@ with st.container():
         plt.plot(history.history['val_loss'],label='Validation Loss')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
-        ax.set_xlabel('Epochs')
-        ax.set_ylabel('Loss')
-        ax.set_title('Model Loss Curve')
+        ax.set_xlabel('Epochs',color='white')
+        ax.set_ylabel('Loss',color='white')
+        ax.set_title('Model Loss Curve',weight='bold',color='white')
         ax.tick_params(colors='white') 
         plt.tight_layout()
         ax.legend()

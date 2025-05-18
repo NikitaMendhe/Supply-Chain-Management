@@ -161,6 +161,7 @@ with st.container():
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
     with col3:
+        transportation_stats=filtered_df.groupby('Transportation modes')['Order quantities'].sum().reset_index()
         fig, ax = plt.subplots(figsize=(4.5, 3.5))
         sns.heatmap(transportation_stats['Order quantities'].values.reshape(-1, 1),annot=True, fmt='.0f', cmap='YlGnBu',yticklabels=transportation_stats['Transportation modes'],xticklabels=['Order quantities'], ax=ax)
         ax.set_xlabel('')

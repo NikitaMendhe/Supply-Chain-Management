@@ -161,15 +161,15 @@ with st.container():
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
     with col3:
-        fig_hm, ax_hm = plt.subplots(figsize=(4.5, 3.5))
-        sns.heatmap(transportation_stats['Order quantities'].values.reshape(-1, 1),annot=True, fmt='.0f', cmap='YlGnBu',yticklabels=transportation_stats['Transportation modes'],xticklabels=['Order quantities'], ax=ax_hm)
-        ax_hm.set_xlabel('')
-        ax_hm.set_ylabel('Transportation modes', color='white')
-        ax_hm.set_title('Total Order Quantity by Transportation Mode', weight='bold', fontsize=12, color='white')
-        fig_hm.patch.set_facecolor('none')
-        ax_hm.set_facecolor('none')
+        fig, ax = plt.subplots(figsize=(4.5, 3.5))
+        sns.heatmap(transportation_stats['Order quantities'].values.reshape(-1, 1),annot=True, fmt='.0f', cmap='YlGnBu',yticklabels=transportation_stats['Transportation modes'],xticklabels=['Order quantities'], ax=ax)
+        ax.set_xlabel('')
+        ax.set_ylabel('Transportation modes', color='white')
+        ax.set_title('Total Order Quantity by Transportation Mode', weight='bold', fontsize=12, color='white')
+        fig.patch.set_facecolor('none')
+        ax.set_facecolor('none')
         plt.tight_layout()
-        st.pyplot(fig_hm, use_container_width=True)
+        st.pyplot(fig, use_container_width=True)
         
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Cost, Pricing & Defects</h2>", unsafe_allow_html=True)

@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 df=pd.read_csv("supply_chain_data.csv")
 st.set_page_config(page_title='SUPPLY CHAIN DASHBOARD', page_icon='🚚', layout='wide')
-st.markdown("""<style>.block-container { padding-top: 0rem; }</style>""", unsafe_allow_html=True)
 st.markdown("""<style>[data-testid="stAppViewContainer"] {background: linear-gradient(135deg, #a18cd1, #000046);color: #ffffff;
 div[data-testid='stMultiSelect']{width:100px !important; font-size:10px !importnat; padding:1px !importnat;}label{font-size:10px !important; color:white !important;}</style>""", unsafe_allow_html=True)
 filtered_df=df.copy() 

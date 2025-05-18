@@ -351,7 +351,7 @@ with st.container():
         fig.patch.set_facecolor('none')
         ax.set_xlabel('Actual Revenue',color='white')
         ax.set_ylabel('Predicted Revenue',color='white')
-        px.set_title('Actual vs Predicted Revenue',color='white')
+        ax.set_title('Actual vs Predicted Revenue',color='white')
         ax.tick_params(colors='white')
         plt.tight_layout()
         ax.legend()

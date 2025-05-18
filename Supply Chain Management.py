@@ -240,7 +240,7 @@ with st.container():
 
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Shipping & Supply Chain Performance</h2>", unsafe_allow_html=True)
-    col1,col2,col3,col4=st.columns(4)
+    col1,col2,col3=st.columns(3)
     with col1:
         transportation_stats=filtered_df.groupby('Transportation modes')['Shipping costs'].mean().reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))

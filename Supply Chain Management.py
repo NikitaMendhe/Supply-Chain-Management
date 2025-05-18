@@ -204,8 +204,8 @@ with st.container():
         plt.xticks(index +bar_width/2,producttype_stat.index, rotation=45)
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
-        plt.bar_label(bars1,fmt='%.2f',color='white')
-        plt.bar_label(bars2,fmt='%.2f',color='white')
+        ax.bar_label(bars1,fmt='%.2f',color='white')
+        ax.bar_label(bars2,fmt='%.2f',color='white')
         ax.set_ylabel('Amount',color='white')
         ax.set_title('Comparison of price and manufacturing costs by product type',weight='bold',fontsize=12,color='white')
         ax.tick_params(colors='white') 
@@ -217,7 +217,7 @@ with st.container():
         fig, ax = plt.subplots(figsize=(4.5,3.5), facecolor='none')
         labels=inspection_results_stats['Inspection results']
         sizes=inspection_results_stats['Defect rates']
-        plt.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),textprops={'color': 'white'})  
+        ax.pie(sizes,labels=labels,autopct='%1.1f%%',explode=[0]*len(labels),textprops={'color': 'white'})  
         fig.patch.set_linewidth(1) 
         fig.suptitle('Defect Rates by Inspection Results',weight='bold',fontsize=12,color='white')
         plt.tight_layout()

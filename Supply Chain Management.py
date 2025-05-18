@@ -333,7 +333,7 @@ with st.container():
         ax.set_title('Residual Vs Predicted Plot',color='white')
         ax.set_xlabel('Predicted Revenue',color='white')
         ax.set_ylabel('Residuals',color='white')
-        ax.tick_params(color='white') 
+        ax.tick_params(colors='white') 
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
         
@@ -351,8 +351,6 @@ with st.container():
         fig.patch.set_facecolor('none')
         ax.set_xlabel('Actual Revenue',color='white')
         ax.set_ylabel('Predicted Revenue',color='white')
-        ax.set_xticks(color='white') 
-        ax.set_yticks(color='white')
         px.set_title('Actual vs Predicted Revenue',color='white')
         ax.tick_params(colors='white')
         plt.tight_layout()

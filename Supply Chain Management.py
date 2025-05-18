@@ -290,22 +290,7 @@ with st.container():
         plt.xticks(color='white') 
         plt.yticks(color='white')
         st.pyplot(fig, use_container_width=True)
-    with col4:
-        location_stats=filtered_df.groupby('Location')['Production volumes'].mean().reset_index()
-        fig, ax = plt.subplots(figsize=(4.5,3.5), facecolor='none')
-        labels=location_stats['Location']
-        sizes=location_stats['Production volumes']
-        colors = ['lightblue', 'skyblue', 'deepskyblue', 'dodgerblue', 'cornflowerblue', 'steelblue']
-        ax.pie(sizes,labels=labels,autopct='%.2f%%',explode=[0]*len(labels),wedgeprops=dict(width=0.7),colors=colors[:len(sizes)],textprops={'color': 'white'} )
-        center_circle=plt.Circle((0,0),0.70,fc='none')
-        fig.patch.set_edgecolor('black')  
-        fig.patch.set_linewidth(1) 
-        ax.gca().add_artist(center_circle)
-        ax.title('Percentage of Production Volumes Aligned with Market Demands by Location',weight='bold',fontsize=12,color='white')
-        ax.tight_layout()
-        ax.xticks(color='white') 
-        ax.yticks(color='white')
-        st.pyplot(fig, use_container_width=True)
+    
 #feature engineering
 filtered_df['Sales_per_stock_unit']=filtered_df['Revenue generated']/filtered_df['Stock levels']
 filtered_df['Profit_per_product']=filtered_df['Revenue generated']-filtered_df['Manufacturing costs']

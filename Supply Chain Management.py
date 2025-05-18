@@ -44,7 +44,6 @@ with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Sales & Product Performance</h2>", unsafe_allow_html=True)   
     col1,col2,col3=st.columns(3)
     with col1:
-    #Chart1
         revenue_by_product=filtered_df.groupby('Product type')['Revenue generated'].sum().sort_values(ascending =False).reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=revenue_by_product,x='Product type',y='Revenue generated',palette='Blues_d',edgecolor='none')
@@ -58,8 +57,8 @@ with st.container():
         ax.tick_params(colors='white')
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
+        
     with col2:
-    #Chart2
         location_revenue=filtered_df.groupby('Location')['Revenue generated'].sum().reset_index()
         fig, ax = plt.subplots(figsize=(4.5,3.5), facecolor='none')
         labels=location_revenue['Location']
@@ -69,10 +68,9 @@ with st.container():
         ax.patch.set_linewidth(1) 
         fig.suptitle('Revenue Distribution by Location',weight='bold',fontsize=12,color='white')
         plt.tight_layout()
-        st.pyplot(fig, use_container_width=True)
+        st.pyplot(fig,use_container_width=True)
         
-    with col3:
-    #chart 3  
+    with col3: 
         supplier_revenue=filtered_df.groupby('Supplier name')['Revenue generated'].sum().reset_index()
         fig, ax = plt.subplots(figsize=(4.5,3.5), facecolor='none')
         labels=supplier_revenue['Supplier name']
@@ -131,6 +129,7 @@ with st.container():
         ax.tick_params(colors='white') 
         plt.tight_layout()
         st.pyplot(fig, use_container_width=True)
+        
 with st.container():
     st.markdown("<h2 style='color:white;'>🔹 Inventory & Stock Insights</h2>", unsafe_allow_html=True)
     col1,col2,col3=st.columns(3)

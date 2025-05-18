@@ -136,7 +136,7 @@ with st.container():
     with col1:
         product_statistics= filtered_df.groupby('Product type')['Stock levels'].mean().reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
-        ax=sns.barplot(data=product_statistics,x='Product type',y='Stock levels',palette='colorblind')
+        sns.barplot(data=product_statistics,x='Product type',y='Stock levels',palette='colorblind')
         ax.bar_label(ax.containers[0], fmt='%.0f',color='white')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')

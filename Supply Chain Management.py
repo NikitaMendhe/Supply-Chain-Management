@@ -49,8 +49,8 @@ with st.container():
         revenue_by_product=filtered_df.groupby('Product type')['Revenue generated'].sum().sort_values(ascending =False).reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=revenue_by_product,x='Product type',y='Revenue generated',palette='Blues_d',edgecolor='none')
-        bars = ax.containers[0]
-        ax.bar_label(bars,fmt='%.f',padding=3,color='white')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
         ax.set_xlabel('Product Type',color='white')
@@ -93,8 +93,8 @@ with st.container():
         unit_sold_stat=filtered_df.groupby('Product type')['Number of products sold'].sum().reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=unit_sold_stat,x='Product type',y='Number of products sold',palette='Reds')
-        bars=ax.containers[0]
-        ax.bar_label(bars,fmt='%.f',color='white')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
         ax.set_xlabel('Product type',color='white')
@@ -121,8 +121,8 @@ with st.container():
         profitby_prod=filtered_df.groupby('Product type')['Profit'].sum().reset_index()
         fig, ax = plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=profitby_prod,x='Product type',y='Profit',palette='Paired')
-        bars=ax.containers[0]
-        ax.bar_label(bars,fmt='%.f',color='white')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         fig.patch.set_facecolor('none')
         ax.set_facecolor('none')
         ax.set_xlabel('Product type',color='white')
@@ -139,7 +139,8 @@ with st.container():
         product_statistics= filtered_df.groupby('Product type')['Stock levels'].mean().reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
         sns.barplot(data=product_statistics,x='Product type',y='Stock levels',palette='colorblind')
-        ax.bar_label(ax.containers[0], fmt='%.0f',color='white')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
         ax.set_title('Impact of Stocks levels on products',weight='bold',fontsize=12,color='white')
@@ -152,8 +153,8 @@ with st.container():
         locationstats=filtered_df.groupby('Location')['Order quantities'].sum().reset_index()
         fig, ax = plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=locationstats,x='Location',y='Order quantities',palette='muted')
-        bars=ax.containers[0]
-        ax.bar_label(bars,fmt='%.f',color='white')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         fig.patch.set_facecolor('none')
         ax.set_facecolor('none')
         ax.set_xlabel('Location',color='white')
@@ -184,8 +185,8 @@ with st.container():
         supplier_statistics=filtered_df.groupby('Supplier name')[['Manufacturing costs','Defect rates']].sum().reset_index()
         fig,ax1=plt.subplots(figsize=(4.5,3.5))
         ax1=sns.barplot(data=supplier_statistics,x='Supplier name',y='Manufacturing costs',label='Manufacturing costs',ax=ax1,palette='Greens_d')
-        bars=ax1.containers[0]
-        ax1.bar_label(bars,fmt='%.1f',color='white')
+        for container in ax1.containers:
+            ax1.bar_label(container, fmt='%.0f', padding=1,color='white')
         ax2=ax1.twinx()
         sns.lineplot(data=supplier_statistics, x='Supplier name', y='Defect rates', ax=ax2, marker='o', color='steelblue')
         ax2.set_ylabel('Defect Rates', color='white')
@@ -236,8 +237,8 @@ with st.container():
         transportation_stats=filtered_df.groupby('Transportation modes')['Shipping costs'].mean().reset_index()
         fig,ax=plt.subplots(figsize=(4.5,3.5))
         ax=sns.barplot(data=transportation_stats,y='Transportation modes',x='Shipping costs',palette='viridis')
-        bars=ax.containers[0] 
-        ax.bar_label(bars,fmt='%.f')
+        for container in ax.containers:
+            ax.bar_label(container, fmt='%.0f', padding=1,color='white')
         ax.set_facecolor('none')
         fig.patch.set_facecolor('none')
         ax.set_xlabel('Shipping costs',color='white')
